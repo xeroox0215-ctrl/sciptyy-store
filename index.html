@@ -63,12 +63,9 @@
         tg.expand();
 
         function buyCase(price, type) {
-            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                tg.sendData(JSON.stringify({ action: 'buy_case', price: price, type: type }));
-                tg.close();
-            } else {
-                alert('Пожалуйста, откройте этот сайт через Telegram-бота!');
-            }
+            // Открываем бота и передаем ему команду покупки
+            tg.openTelegramLink(`https://t.me/sciptyy_storebot?start=buy_${type}_${price}`);
+            tg.close();
         }
     </script>
 </body>
