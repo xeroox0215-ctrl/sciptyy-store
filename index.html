@@ -42,8 +42,8 @@
         <div class="case-3d" id="case3d"></div>
         <div id="win-card">
             <div class="win-title" id="win-text">🎉 Кейс открыт!</div>
-            <div class="win-sub" id="win-sub">Зайдите в бота, чтобы забрать приз!</div>
-            <button class="close-btn" onclick="closeGame()">Забрать в боте</button>
+            <div class="win-sub" id="win-sub">Это демо-версия. Чтобы купить настоящий кейс, зайдите в бота!</div>
+            <button class="close-btn" onclick="closeGame()">Вернуться в бота</button>
         </div>
     </div>
     <script>
@@ -54,12 +54,7 @@
             let winText = document.getElementById('win-text');
             let winSub = document.getElementById('win-sub');
 
-            // Отправляем команду боту купить кейс
-            let iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = `https://t.me/sciptyy_storebot?start=buy_${type}_${price}`;
-            document.body.appendChild(iframe);
-
+            // Просто показываем анимацию, ничего не отправляем
             overlay.style.display = 'flex';
             case3d.className = 'case-3d';
             winCard.style.display = 'none';
@@ -89,7 +84,7 @@
                 winCard.style.display = 'block';
                 setTimeout(() => { winCard.classList.add('active'); }, 50);
                 winText.innerText = "🎉 Кейс открыт!";
-                winSub.innerText = "Ваш выигрыш зачислен в бота. Проверьте профиль или ожидайте сообщения от админа.";
+                winSub.innerText = "Это демо-версия. Чтобы купить настоящий кейс, нажмите кнопку ниже.";
             }, 4000);
         }
 
