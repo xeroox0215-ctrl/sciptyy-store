@@ -4,94 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sciptyy Cases</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { background-color: #1a1a1a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
+        body { background-color: #1a1a1a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         h1 { color: #f39c12; text-align: center; margin-bottom: 20px; }
-        
-        .case-container { background: #2c2c2c; border-radius: 15px; padding: 20px; margin-bottom: 20px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .case { background: #2c2c2c; border-radius: 15px; padding: 20px; margin-bottom: 20px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .price { color: #2ecc71; font-size: 20px; font-weight: bold; margin: 10px 0; }
-        .btn { background: #e67e22; color: white; border: none; padding: 15px; border-radius: 8px; font-size: 18px; font-weight: bold; width: 100%; cursor: pointer; transition: 0.2s; margin-bottom: 10px;}
+        .btn { background: #e67e22; color: white; border: none; padding: 15px; border-radius: 8px; font-size: 18px; font-weight: bold; width: 100%; cursor: pointer; text-decoration: none; display: block; margin-bottom: 10px;}
         .btn:active { background: #d35400; transform: scale(0.98); }
-
-        /* Экран анимации */
-        #animation-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); flex-direction: column; justify-content: center; align-items: center; z-index: 100; }
-        .roulette { width: 100%; height: 150px; overflow: hidden; position: relative; background: #222; border-top: 2px solid #f39c12; border-bottom: 2px solid #f39c12; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;}
-        .roulette-items { display: flex; gap: 20px; font-size: 50px; animation: spin 0.5s linear infinite; }
-        @keyframes spin { 0% { transform: translateX(200%); } 100% { transform: translateX(-200%); } }
-        
-        .prize-screen { display: none; text-align: center; animation: pop 0.5s ease-out; }
-        @keyframes pop { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        .prize-text { font-size: 24px; font-weight: bold; color: #f1c40f; margin-bottom: 20px; }
-        .close-btn { background: #3498db; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; }
-
-        /* Модальное окно */
-        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 200; }
-        .modal-content { background: #2c2c2c; padding: 20px; border-radius: 15px; text-align: center; width: 80%; max-width: 300px; }
     </style>
 </head>
 <body>
     <h1>🔥 Кейсы Sciptyy Store</h1>
 
-    <div id="menu-screen">
-        <div class="case-container">
-            <h2>📦 Обычный кейс</h2>
-            <div class="price">99 ₽</div>
-            <button class="btn" onclick="buyCase(99, 'normal')">Купить и открыть</button>
-        </div>
-        <div class="case-container">
-            <h2>👑 VIP Кейс</h2>
-            <div class="price">249 ₽</div>
-            <button class="btn" onclick="buyCase(249, 'vip')">Купить и открыть</button>
-        </div>
+    <div class="case">
+        <h2>📦 Обычный кейс</h2>
+        <div class="price">99 ₽</div>
+        <a href="https://t.me/sciptyy_storebot?start=buy_normal_99" class="btn">Купить и открыть</a>
     </div>
 
-    <!-- Окно подтверждения -->
-    <div id="modal">
-        <div class="modal-content">
-            <div id="modal-text" style="margin-bottom: 20px;"></div>
-            <button class="btn" id="modal-yes">✅ Да</button>
-            <button class="btn" style="background: #c0392b;" onclick="closeModal()">❌ Отмена</button>
-        </div>
+    <div class="case">
+        <h2>👑 VIP Кейс</h2>
+        <div class="price">249 ₽</div>
+        <a href="https://t.me/sciptyy_storebot?start=buy_vip_249" class="btn">Купить и открыть</a>
     </div>
-
-    <!-- Анимация -->
-    <div id="animation-screen">
-        <div id="spin-view" class="roulette">
-            <div class="roulette-items">📦 💰 🎁 👑 🔥 💸 📱</div>
-        </div>
-        <div id="prize-view" class="prize-screen">
-            <div class="prize-text" id="prize-text"></div>
-            <button class="close-btn" onclick="tg.close()">Забрать приз в боте</button>
-        </div>
-    </div>
-
-    <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
-
-        function showModal(text, callback) {
-            document.getElementById('modal-text').innerHTML = text;
-            document.getElementById('modal').style.display = 'flex';
-            document.getElementById('modal-yes').onclick = () => { closeModal(); callback(); };
-        }
-
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
-
-        function buyCase(price, type) {
-            showModal(`Вы уверены, что хотите списать <b>${price} ₽</b> с баланса?`, () => {
-                tg.sendData(JSON.stringify({ action: 'buy_case', price: price, type: type }));
-                // Не закрываем сайт! Запускаем анимацию
-                document.getElementById('menu-screen').style.display = 'none';
-                document.getElementById('animation-screen').style.display = 'flex';
-                
-                setTimeout(() => {
-                    document.getElementById('spin-view').style.display = 'none';
-                    document.getElementById('prize-view').style.display = 'block';
-                    document.getElementById('prize-text').innerText = "✅ Кейс куплен!\nЗайдите в бота, чтобы открыть его.";
-                }, 3000);
-            });
-        }
-    </script>
 </body>
 </html>
