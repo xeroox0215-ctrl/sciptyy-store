@@ -52,6 +52,9 @@
         tg.expand();
 
         function startAnimation(price, type) {
+            if (!confirm("Вы уверены, что хотите купить кейс за " + price + " ₽?")) return;
+            
+            // Отправляем данные боту
             tg.sendData(JSON.stringify({ action: 'buy_case', price: price, type: type }));
             
             let overlay = document.getElementById('overlay');
