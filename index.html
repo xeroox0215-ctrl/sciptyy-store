@@ -63,8 +63,7 @@
         tg.expand();
 
         function buyCase(price, type) {
-            // Открываем бота и передаем ему команду покупки
-            tg.openTelegramLink(`https://t.me/sciptyy_storebot?start=buy_${type}_${price}`);
+            tg.sendData(JSON.stringify({ action: 'buy_case', price: price, type: type }));
             tg.close();
         }
     </script>
