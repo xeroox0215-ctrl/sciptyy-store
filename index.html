@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sciptyy Space Cases</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body { margin: 0; padding: 0; background: radial-gradient(circle at bottom, #111622 0%, #06080c 100%); color: #fff; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
         .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-image: radial-gradient(1px 1px at 20px 30px, #5a6a80, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #4a5a70, rgba(0,0,0,0)), radial-gradient(1px 1px at 50px 160px, #3a4a60, rgba(0,0,0,0)), radial-gradient(1px 1px at 90px 40px, #6a7a90, rgba(0,0,0,0)); background-repeat: repeat; background-size: 200px 200px; animation: twinkle 6s infinite; }
@@ -14,16 +13,6 @@
         .price { font-size: 22px; font-weight: bold; color: #4ade80; margin: 10px 0; }
         .btn { background: linear-gradient(45deg, #2a5a80, #4a80a0); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 18px; font-weight: bold; width: 100%; cursor: pointer; transition: 0.3s; }
         .btn:active { transform: scale(0.95); }
-        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 7, 10, 0.95); backdrop-filter: blur(5px); justify-content: center; align-items: center; z-index: 100; perspective: 1200px; }
-        .case-3d { width: 120px; height: 120px; background: url('https://cdn-icons-png.flaticon.com/512/679/679720.png') no-repeat center center; background-size: contain; position: absolute; transform: translateZ(-800px) scale(0.1); transition: transform 2s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .case-3d.arrived { transform: translateZ(200px) scale(1.2) rotate(5deg); }
-        .case-3d.explode { transform: translateZ(400px) scale(2) rotate(-10deg); opacity: 0; transition: all 1.5s ease-out; }
-        .flying-item { position: absolute; font-size: 40px; opacity: 0; transform: translate(0, 0) scale(0.5); transition: all 3s cubic-bezier(0.1, 0.8, 0.3, 1); z-index: 5; }
-        #win-card { display: none; background: rgba(15, 20, 30, 0.95); border: 2px solid #4a80a0; border-radius: 20px; padding: 30px; text-align: center; transform: scale(0); transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 20; width: 80%; max-width: 300px; }
-        #win-card.active { transform: scale(1); }
-        .win-title { color: #fff; font-size: 22px; font-weight: bold; margin-bottom: 10px; }
-        .win-sub { color: #ff4a4a; font-size: 16px; font-weight: bold; margin-bottom: 20px; }
-        .close-text { color: #8a9ab0; font-size: 14px; text-align: center; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -32,69 +21,12 @@
     <div class="case-container">
         <h2>📦 Обычный кейс</h2>
         <div class="price">99 ₽</div>
-        <button class="btn" onclick="startAnimation(99, 'normal')">Купить и открыть</button>
+        <a href="https://t.me/sciptyy_storebot?start=buy_normal_99" class="btn">Купить и открыть</a>
     </div>
     <div class="case-container">
         <h2>👑 VIP Кейс</h2>
         <div class="price">249 ₽</div>
-        <button class="btn" onclick="startAnimation(249, 'vip')">Купить и открыть</button>
+        <a href="https://t.me/sciptyy_storebot?start=buy_vip_249" class="btn">Купить и открыть</a>
     </div>
-    <div id="overlay">
-        <div class="case-3d" id="case3d"></div>
-        <div id="win-card">
-            <div class="win-title" id="win-text">🎉 Кейс открыт!</div>
-            <div class="win-sub" id="win-sub">Нажмите на крестик вверху, чтобы вернуться в бота!</div>
-            <div class="close-text">Выигрыш уже в вашем профиле в боте.</div>
-        </div>
-    </div>
-    <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
-
-        function startAnimation(price, type) {
-            if (!confirm("Вы уверены, что хотите купить кейс за " + price + " ₽?")) return;
-            
-            // Отправляем данные боту
-            tg.sendData(JSON.stringify({ action: 'buy_case', price: price, type: type }));
-            
-            let overlay = document.getElementById('overlay');
-            let case3d = document.getElementById('case3d');
-            let winCard = document.getElementById('win-card');
-            let winText = document.getElementById('win-text');
-            let winSub = document.getElementById('win-sub');
-
-            overlay.style.display = 'flex';
-            case3d.className = 'case-3d';
-            winCard.style.display = 'none';
-            winCard.classList.remove('active');
-            document.querySelectorAll('.flying-item').forEach(e => e.remove());
-
-            setTimeout(() => { case3d.classList.add('arrived'); }, 100);
-
-            setTimeout(() => {
-                case3d.classList.add('explode');
-                for (let i = 0; i < 30; i++) {
-                    let item = document.createElement('div');
-                    item.className = 'flying-item';
-                    item.innerText = ['💰', '🇺🇸', '🎁', '⭐', '🔥', '💎'][Math.floor(Math.random() * 6)];
-                    item.style.left = '50%'; item.style.top = '50%';
-                    overlay.appendChild(item);
-                    setTimeout(() => {
-                        let x = (Math.random() - 0.5) * 1000;
-                        let y = (Math.random() - 0.5) * 1000;
-                        item.style.transform = `translate(${x}px, ${y}px) scale(1.5) rotate(${Math.random()*720}deg)`;
-                        item.style.opacity = '1';
-                    }, 50);
-                }
-            }, 2500);
-
-            setTimeout(() => {
-                winCard.style.display = 'block';
-                setTimeout(() => { winCard.classList.add('active'); }, 50);
-                winText.innerText = "🎉 Кейс открыт!";
-                winSub.innerText = "Нажмите на крестик вверху, чтобы вернуться в бота!";
-            }, 4000);
-        }
-    </script>
 </body>
 </html>
