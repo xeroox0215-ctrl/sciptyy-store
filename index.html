@@ -13,7 +13,6 @@
         .price { color: #2ecc71; font-size: 20px; font-weight: bold; margin: 10px 0; }
         .btn { background: #e67e22; color: white; border: none; padding: 15px; border-radius: 8px; font-size: 18px; font-weight: bold; width: 100%; cursor: pointer; transition: 0.2s; margin-bottom: 10px;}
         .btn:active { background: #d35400; transform: scale(0.98); }
-        .btn-open { background: #27ae60; display: none; }
 
         /* Экран анимации */
         #animation-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); flex-direction: column; justify-content: center; align-items: center; z-index: 100; }
@@ -38,14 +37,12 @@
         <div class="case-container">
             <h2>📦 Обычный кейс</h2>
             <div class="price">99 ₽</div>
-            <button class="btn" id="btn-buy-normal" onclick="buyCase(99, 'normal')">Купить и открыть</button>
-            <button class="btn btn-open" id="btn-open-normal" onclick="openCase('normal')">🎁 У вас есть кейс - Открыть</button>
+            <button class="btn" onclick="buyCase(99, 'normal')">Купить и открыть</button>
         </div>
         <div class="case-container">
             <h2>👑 VIP Кейс</h2>
             <div class="price">249 ₽</div>
-            <button class="btn" id="btn-buy-vip" onclick="buyCase(249, 'vip')">Купить и открыть</button>
-            <button class="btn btn-open" id="btn-open-vip" onclick="openCase('vip')">🎁 У вас есть кейс - Открыть</button>
+            <button class="btn" onclick="buyCase(249, 'vip')">Купить и открыть</button>
         </div>
     </div>
 
@@ -73,13 +70,6 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Проверяем, есть ли купленный кейс в памяти браузера
-        let hasNormal = localStorage.getItem('case_normal') === 'true';
-        let hasVip = localStorage.getItem('case_vip') === 'true';
-
-        if (hasNormal) { document.getElementById('btn-buy-normal').style.display = 'none'; document.getElementById('btn-open-normal').style.display = 'block'; }
-        if (hasVip) { document.getElementById('btn-buy-vip').style.display = 'none'; document.getElementById('btn-open-vip').style.display = 'block'; }
-
         function showModal(text, callback) {
             document.getElementById('modal-text').innerHTML = text;
             document.getElementById('modal').style.display = 'flex';
@@ -91,25 +81,14 @@
         function buyCase(price, type) {
             showModal(`Вы уверены, что хотите списать <b>${price} ₽</b> с баланса?`, () => {
                 tg.sendData(JSON.stringify({ action: 'buy_case', price: price, type: type }));
-                localStorage.setItem(`case_${type}`, 'true');
-                document.getElementById(`btn-buy-${type}`).style.display = 'none';
-                document.getElementById(`btn-open-${type}`).style.display = 'block';
-                tg.close();
-            });
-        }
-
-        function openCase(type) {
-            showModal(`Открыть кейс сейчас?<br><small>(Если закроете — останется в боте)</small>`, () => {
+                // Не закрываем сайт! Запускаем анимацию
                 document.getElementById('menu-screen').style.display = 'none';
                 document.getElementById('animation-screen').style.display = 'flex';
-
-                // Крутим 3 секунды
+                
                 setTimeout(() => {
                     document.getElementById('spin-view').style.display = 'none';
                     document.getElementById('prize-view').style.display = 'block';
-                    document.getElementById('prize-text').innerText = "✅ Кейс открыт!";
-                    localStorage.removeItem(`case_${type}`);
-                    tg.sendData(JSON.stringify({ action: 'open_case', type: type }));
+                    document.getElementById('prize-text').innerText = "✅ Кейс куплен!\nЗайдите в бота, чтобы открыть его.";
                 }, 3000);
             });
         }
