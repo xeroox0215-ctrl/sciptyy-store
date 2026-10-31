@@ -52,7 +52,6 @@
         tg.expand();
 
         function startAnimation(price, type) {
-            // Отправляем команду боту
             tg.sendData(JSON.stringify({ action: 'buy_case', price: price, type: type }));
             
             let overlay = document.getElementById('overlay');
