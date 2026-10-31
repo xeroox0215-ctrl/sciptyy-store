@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sciptyy Space Cases</title>
     <style>
-        /* Космический фон */
+        /* Космический фон (приглушенный) */
         body {
             margin: 0;
             padding: 0;
-            background: radial-gradient(circle at bottom, #1b2735 0%, #090a0f 100%);
+            background: radial-gradient(circle at bottom, #111622 0%, #06080c 100%);
             color: #fff;
             font-family: 'Segoe UI', sans-serif;
             overflow-x: hidden;
@@ -25,66 +25,62 @@
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             background-image: 
-                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+                radial-gradient(1px 1px at 20px 30px, #5a6a80, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, #4a5a70, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 50px 160px, #3a4a60, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 90px 40px, #6a7a90, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 130px 80px, #4a5a70, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 160px 120px, #3a4a60, rgba(0,0,0,0));
             background-repeat: repeat;
             background-size: 200px 200px;
-            animation: twinkle 5s infinite;
+            animation: twinkle 6s infinite;
         }
         @keyframes twinkle {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 0.4; }
         }
 
         h1 {
             margin-top: 30px;
-            font-size: 32px;
+            font-size: 28px;
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 2px;
-            background: linear-gradient(90deg, #00c6ff, #0072ff, #00c6ff);
+            background: linear-gradient(90deg, #4a80a0, #2a5a80, #4a80a0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: glow 3s infinite alternate;
+            animation: glow 4s infinite alternate;
         }
         @keyframes glow {
-            from { filter: drop-shadow(0 0 5px #00c6ff); }
-            to { filter: drop-shadow(0 0 20px #0072ff); }
+            from { filter: drop-shadow(0 0 3px #4a80a0); }
+            to { filter: drop-shadow(0 0 10px #2a5a80); }
         }
 
         /* Карточки кейсов */
         .case-container {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 25px;
             width: 85%;
             max-width: 350px;
             text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .case-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 32px 0 rgba(0, 198, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
         }
         
         .price {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
-            color: #00ff87;
-            text-shadow: 0 0 10px rgba(0, 255, 135, 0.5);
+            color: #4ade80; /* Приглушенный зеленый */
+            text-shadow: 0 0 5px rgba(74, 222, 128, 0.3);
             margin: 10px 0;
         }
 
         .btn {
-            background: linear-gradient(45deg, #0072ff, #00c6ff);
+            background: linear-gradient(45deg, #2a5a80, #4a80a0);
             color: white;
             border: none;
             padding: 15px;
@@ -95,12 +91,12 @@
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(42, 90, 128, 0.3);
             transition: 0.3s;
         }
         .btn:active {
             transform: scale(0.95);
-            box-shadow: 0 0 20px rgba(0, 198, 255, 0.8);
+            box-shadow: 0 0 15px rgba(74, 128, 160, 0.6);
         }
 
         /* Экран анимации */
@@ -108,23 +104,37 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 5, 10, 0.95);
-            backdrop-filter: blur(8px);
+            background: rgba(5, 7, 10, 0.95);
+            backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
             z-index: 100;
-            perspective: 1000px;
+            perspective: 1200px;
             overflow: hidden;
         }
 
+        /* Кейс вылетает из глубины */
         .case-3d {
-            width: 150px; height: 150px;
+            width: 120px; height: 120px;
             background: url('https://cdn-icons-png.flaticon.com/512/679/679720.png') no-repeat center center;
             background-size: contain;
             position: absolute;
-            transition: transform 1s ease-in;
+            transform: translateZ(-800px) scale(0.1);
+            transition: transform 2s cubic-bezier(0.2, 0.8, 0.2, 1);
             z-index: 10;
-            filter: drop-shadow(0 0 15px #00c6ff);
+            filter: drop-shadow(0 0 10px #4a80a0);
+        }
+        
+        /* Состояние, когда кейс подлетел */
+        .case-3d.arrived {
+            transform: translateZ(200px) scale(1.2) rotate(5deg);
+        }
+
+        /* Состояние, когда кейс взрывается */
+        .case-3d.explode {
+            transform: translateZ(400px) scale(2) rotate(-10deg);
+            opacity: 0;
+            transition: all 1.5s ease-out;
         }
 
         /* Разлетающиеся элементы */
@@ -132,16 +142,17 @@
             position: absolute;
             font-size: 40px;
             opacity: 0;
-            transition: all 2.5s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translate(0, 0) scale(0.5);
+            transition: all 3s cubic-bezier(0.1, 0.8, 0.3, 1);
             z-index: 5;
-            filter: drop-shadow(0 0 10px #fff);
+            filter: drop-shadow(0 0 8px #fff);
         }
 
         /* Карточка выигрыша */
         #win-card {
             display: none;
-            background: rgba(20, 20, 30, 0.9);
-            border: 2px solid #00c6ff;
+            background: rgba(15, 20, 30, 0.95);
+            border: 2px solid #4a80a0;
             border-radius: 20px;
             padding: 30px;
             text-align: center;
@@ -150,20 +161,22 @@
             z-index: 20;
             width: 80%;
             max-width: 300px;
-            box-shadow: 0 0 40px rgba(0, 198, 255, 0.6);
+            box-shadow: 0 0 30px rgba(74, 128, 160, 0.4);
         }
         #win-card.active { transform: scale(1); }
+        
         .win-title {
             color: #fff;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             margin-bottom: 10px;
-            text-shadow: 0 0 10px #00c6ff;
+            text-shadow: 0 0 5px #4a80a0;
         }
-        .win-sub { color: #aaa; font-size: 14px; margin-bottom: 20px; }
+        .win-sub { color: #8a9ab0; font-size: 14px; margin-bottom: 20px; }
+        
         .close-btn {
-            background: linear-gradient(45deg, #00ff87, #60efff);
-            color: #000;
+            background: linear-gradient(45deg, #2a5a80, #4a80a0);
+            color: #fff;
             border: none;
             padding: 12px;
             border-radius: 8px;
@@ -171,9 +184,8 @@
             font-weight: bold;
             cursor: pointer;
             width: 100%;
-            box-shadow: 0 4px 15px rgba(0, 255, 135, 0.4);
+            box-shadow: 0 4px 15px rgba(42, 90, 128, 0.3);
         }
-    </script>
     </style>
 </head>
 <body>
@@ -210,21 +222,24 @@
             let winCard = document.getElementById('win-card');
             let winText = document.getElementById('win-text');
 
+            // 1. Сброс и показ экрана
             overlay.style.display = 'flex';
-            case3d.style.transform = 'translateZ(0) scale(1) rotate(0deg)';
-            case3d.style.opacity = '1';
+            case3d.className = 'case-3d'; // Сброс классов
             winCard.style.display = 'none';
             winCard.classList.remove('active');
-
-            // Удаляем старые элементы
             document.querySelectorAll('.flying-item').forEach(e => e.remove());
 
-            // Анимация: приближаем и взрываем
+            // 2. Кейс вылетает из глубины (2 секунды)
             setTimeout(() => {
-                case3d.style.transform = 'translateZ(400px) scale(1.5) rotate(15deg)';
+                case3d.classList.add('arrived');
+            }, 100);
+
+            // 3. Кейс висит, а затем взрывается (еще через 1.5 сек)
+            setTimeout(() => {
+                case3d.classList.add('explode');
                 
-                // Спавним частицы
-                for (let i = 0; i < 25; i++) {
+                // Спавним частицы, которые медленно разлетаются
+                for (let i = 0; i < 30; i++) {
                     let item = document.createElement('div');
                     item.className = 'flying-item';
                     item.innerText = ['💰', '🇺🇸', '🎁', '⭐', '🔥', '💎'][Math.floor(Math.random() * 6)];
@@ -232,30 +247,30 @@
                     item.style.top = '50%';
                     overlay.appendChild(item);
                     
+                    // Запускаем анимацию разлета с задержкой
                     setTimeout(() => {
-                        let x = (Math.random() - 0.5) * 800;
-                        let y = (Math.random() - 0.5) * 800;
-                        item.style.transform = `translate(${x}px, ${y}px) scale(1.2) rotate(${Math.random()*360}deg)`;
+                        let x = (Math.random() - 0.5) * 1000;
+                        let y = (Math.random() - 0.5) * 1000;
+                        item.style.transform = `translate(${x}px, ${y}px) scale(1.5) rotate(${Math.random()*720}deg)`;
                         item.style.opacity = '1';
                     }, 50);
                 }
-            }, 500);
+            }, 2500); // Ждем 2.5 сек (2 сек на вылет + 0.5 на зависание)
 
-            // Результат через 2.5 секунды
+            // 4. Показ карточки выигрыша (еще через 1.5 сек)
             setTimeout(() => {
-                case3d.style.opacity = '0';
                 winCard.style.display = 'block';
                 setTimeout(() => { winCard.classList.add('active'); }, 50);
                 
-                // Выдаем случайный приз для визуала
+                // Рандомный текст для визуала
                 let prizes = ["📱 США за 50₽", "🎁 Промокод 10%", "💰 5 Рублей", "🔥 США за 300₽", "💎 VIP Промокод 50%"];
                 winText.innerText = "🎉 Вы выиграли:\n" + prizes[Math.floor(Math.random() * prizes.length)];
-            }, 2500);
+            }, 4000);
 
-            // Перекидываем в бота через 5 секунд
+            // 5. Перекидываем в бота через 7 секунд (чтобы юзер успел насладиться)
             setTimeout(() => {
                 window.location.href = `https://t.me/sciptyy_storebot?start=buy_${type}_${price}`;
-            }, 5000); 
+            }, 7000); 
         }
 
         function finishGame() {
