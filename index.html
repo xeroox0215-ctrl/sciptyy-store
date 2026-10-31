@@ -41,9 +41,9 @@
     <div id="overlay">
         <div class="case-3d" id="case3d"></div>
         <div id="win-card">
-            <div class="win-title" id="win-text">🎉 Вы выиграли!</div>
-            <div class="win-sub" id="win-sub">Зайдите в бота, чтобы получить приз!</div>
-            <button class="close-btn" onclick="finishGame()">Забрать в боте</button>
+            <div class="win-title" id="win-text">🎉 Кейс открыт!</div>
+            <div class="win-sub" id="win-sub">Зайдите в бота, чтобы забрать приз!</div>
+            <button class="close-btn" onclick="closeGame()">Забрать в боте</button>
         </div>
     </div>
     <script>
@@ -54,8 +54,7 @@
             let winText = document.getElementById('win-text');
             let winSub = document.getElementById('win-sub');
 
-            // Отправляем команду боту списать деньги (в фоне)
-            // Используем скрытый iframe, чтобы не перекидывать сразу
+            // Отправляем команду боту купить кейс
             let iframe = document.createElement('iframe');
             iframe.style.display = 'none';
             iframe.src = `https://t.me/sciptyy_storebot?start=buy_${type}_${price}`;
@@ -94,7 +93,7 @@
             }, 4000);
         }
 
-        function finishGame() {
+        function closeGame() {
             window.location.href = `https://t.me/sciptyy_storebot`;
         }
     </script>
